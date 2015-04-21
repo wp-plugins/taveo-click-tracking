@@ -1,0 +1,71 @@
+#sidebar-container {
+  width: 261px;
+  padding: 0 0 0 20px;
+}
+
+.left{
+    background:red;
+}
+.right{
+    float:right;
+    width:200px;
+    background:green
+    height: 100%;
+    min-height: 100%;
+}
+.taveotextinput{
+	width: 400px;
+	padding: 5px;
+	border: 1px solid #ddd;
+	-webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,.07);
+	box-shadow: inset 0 1px 2px rgba(0,0,0,.07);
+	background-color: #fff;
+	color: #333;
+	outline: 0;
+	-webkit-transition: .05s border-color ease-in-out;
+	transition: .05s border-color ease-in-out;
+}
+.taveo_table{
+	background: white;
+	text-align: left;
+	border: 1px solid darkgrey;
+	padding: 1em;
+}
+.taveo_table tr{
+	border-bottom: 1px solid black;
+}
+
+#wrapper
+{
+    display: table;
+    width: 100%;
+}
+
+.dashboard {
+  margin: 10px 20px 0 2px;
+}
+.block1 {
+	width: auto;
+	display: table-cell;
+	vertical-align: top;
+
+}
+.block2 {
+	display: table-cell;
+  	width: 261px;
+  	padding: 0 0 0 20px;
+	vertical-align: top;
+}
+.text-center {
+	text-align: center;
+}
+
+table.dataTable td.taveo_truncate ,
+table.dataTable th.taveo_truncate 
+{
+	width: 75px;
+	max-width: 75px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

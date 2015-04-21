@@ -1,0 +1,32 @@
+.tb_btns {
+	text-align: right;
+	margin: 20px;
+}
+.tb_btn {
+	padding-left: 10px;
+	padding-right: 10px;
+}
+.text-center {
+    text-align: center;
+}
+.tred {
+	color: red;
+}
+.tgreen {
+	color: green;
+}
+
+#taveos::before {
+	content: '\f103';
+    font: 400 20px/1 dashicons;
+    speak: none;
+    display: inline-block;
+    padding: 0 2px 0 0;
+    top: 0;
+    left: -1px;
+    position: relative;
+    vertical-align: top;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-decoration: none!important;
+}
