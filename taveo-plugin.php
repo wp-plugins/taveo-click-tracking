@@ -5,7 +5,7 @@
  * Description: Taveo is a click tracking and URL shortening platform. When you use Taveo short urls, Taveo tracks the number of clicks, their location, language and referrer. This plugin integrates Taveo with Wordpress, allowing 1 click URL shortening and click tracking. ***A Taveo Account is required (Register free at: http://taveo.net) 
  * Author:      taveo
  * Author URI:  http://taveo.net/
- * Version:     1.0
+ * Version:     1.0.1
  * License: 	GPL2
  *  
  */
@@ -175,8 +175,10 @@ function taveo_enqueue_admin(){
 }
 function taveo_add_meta_box() {
 
-	add_meta_box('taveo_meta_links',__( 'Taveo Analytics - Current Links for this page', 'myplugin_textdomain' ),'taveo_metabox_callback','page');
-	add_meta_box('taveo_meta_links',__( 'Taveo Analytics - Current Links for this post', 'myplugin_textdomain' ),'taveo_metabox_callback','post');
+	add_meta_box('taveo_meta_links',__( 'Taveo Analytics - Current Links for this page', 
+			'myplugin_textdomain' ),'taveo_metabox_callback','page','normal');
+	add_meta_box('taveo_meta_links',__( 'Taveo Analytics - Current Links for this post', 
+			'myplugin_textdomain' ),'taveo_metabox_callback','post','normal');
 	
 }
 add_action( 'add_meta_boxes', 'taveo_add_meta_box' );
@@ -220,7 +222,7 @@ function add_action_links ( $links ) {
  $mylinks = array(
  '<a href="' . admin_url( 'admin.php?page=taveo_dashboard' ) . '">Settings</a>',
  );
-return array_merge( $links, $mylinks );
+return array_merge( $mylinks,$links );
 }
 
 

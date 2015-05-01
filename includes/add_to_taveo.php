@@ -49,6 +49,7 @@ function taveo_metabox_callback ( $post, $metabox ) {
 		        </tr>
 	    	</tfoot>    	
 	    	<tbody>
+	    </table>						
 	</div>
 <?php	 
 }
