@@ -26,10 +26,15 @@ function process_taveo_options(){
    if ( isset( $_POST['taveo_wp_shorten'] ) )
    {
       $taveo_wp_shorten = sanitize_text_field( $_POST['taveo_wp_shorten'] );
+	  if($taveo_wp_shorten == "1") {
+	  	//ok lets find the key associated with this, or create a new one
+	  	$taveo_wp_shorten_key = '961d5481d1fb68bf1a91d175d4005d7d';
+	  }
 	  if ($taveo_wp_shorten !== "1" && $taveo_wp_shorten !== "0") {
 	  	$taveo_error = "Error bad Radio box value!?!?!";
 		$taveo_wp_shorten = NULL;
 	  }
+
    }
    if ( isset( $_POST['taveo_wp_shorten_path'] ) )
    {
@@ -55,7 +60,10 @@ function process_taveo_options(){
 	  }	  
  	  if (isset($taveo_wp_shorten_path)) {
       	update_blog_option(null, 'taveo_wp_shorten_path',$taveo_wp_shorten_path );
-	  }	 
+	  }
+	  if (isset($taveo_wp_shorten_key)) {
+	  	update_blog_option(null, 'taveo_wp_shorten_key',$taveo_wp_shorten_key );
+	  } 
    }
    else {
    	  if (isset($taveo_key)) {
@@ -66,15 +74,16 @@ function process_taveo_options(){
 	  }	 
    	  if (isset($taveo_wp_shorten_path)) {
       	update_option('taveo_wp_shorten_path',$taveo_wp_shorten_path);
-	  }	   
+	  } 
+	  if (isset($taveo_wp_shorten_key)) {
+	  	update_option('taveo_wp_shorten_key',$taveo_wp_shorten_key );
+	  } 	  
    }
  
-   if($taveo_wp_shorten == 1) {
-      flush_rewrite_rules();
-   }
-   else {
-   	error_log("Did not flush rules!?!?! " . $taveo_wp_shorten);
-   } 
+
+   flush_rewrite_rules();
+
+
    wp_redirect(  admin_url( 'admin.php?page=taveo_dashboard&settings-updated=1' ) );
    //wp_redirect( admin_url('admin.php?page='.$_GET["page"]. '&settings-updated=1') );
    exit;

@@ -234,11 +234,13 @@ function taveo_add_rewrites() {
     	$api_key = get_blog_option(null, 'taveo_api_key');
 		$shorten = get_blog_option(null, 'taveo_wp_shorten');
 		$shorten_path = get_blog_option(null, 'taveo_wp_shorten_path');
+		$shorten_key = get_blog_option(null, 'taveo_wp_shorten_key');
 	}
 	else {
 		$api_key = get_option('taveo_api_key' );
 		$shorten = get_option('taveo_wp_shorten');
-		$shorten_path = get_option('taveo_wp_shorten_path');		
+		$shorten_path = get_option('taveo_wp_shorten_path');
+		$shorten_key = get_option('taveo_wp_shorten_key');		
 	}
 	if (empty($shorten_path)) {
 		$shorten_path = 'x';
@@ -246,8 +248,13 @@ function taveo_add_rewrites() {
 
 	if ($shorten === "1") {
 		error_log("Added rewrite rule to ". $shorten_path);
-    	$wp_rewrite->add_external_rule($shorten_path.'/(.*)$', 'wp-content/plugins/taveo-click-tracking/includes/proxy_to_taveo.php?link=$1' );
+		$full_path = plugin_dir_url( __FILE__ );
+		$parsed_path = parse_url($full_path);
+    	$wp_rewrite->add_external_rule($shorten_path.'/(.*)$', ltrim($parsed_path['path'],'/') . 'includes/proxy_to_taveo.php?key='. $shorten_key .'&link=$1' );
     }
+	else {
+		$wp_rewrite->add_external_rule($shorten_path.'/(.*)$', '');
+	}
 
 }
 

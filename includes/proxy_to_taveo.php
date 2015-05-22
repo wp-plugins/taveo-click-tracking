@@ -6,14 +6,29 @@
 | Description: Forwards a http get request to taveo's server    |
 |         so taveo can track and return correct detination,     |
 /--------------------------------------------------------------*/
-ini_set('display_errors',1);
-ini_set('display_startup_errors',1);
-error_reporting(-1);
+#ini_set('display_errors',1);
+#ini_set('display_startup_errors',1);
+#error_reporting(-1);
+
 
 $proxied_headers = array('Set-Cookie', 'Content-Type', 'Cookie', 'Location');
 
-$dom_api_key = '6d582131b3559c070ec8221bf61bc28b';
-$dest_url = 'http://tav.so/api/l/'.$dom_api_key;
+
+/*ensure the correct params are called*/
+if( !((isset($_GET['key'])) && ( isHex($_GET['key']) )) )  {
+	header("HTTP/1.0 404 Not Found");
+	die("404 Not Found");
+}
+$dom_api_key = $_GET['key'];
+$dest_url = '://tav.so/api/l/'.$dom_api_key;
+function isSecure() {
+  return
+    (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+    || $_SERVER['SERVER_PORT'] == 443;
+}
+function isHex($hex_code) {
+        return @preg_match("/^[a-fA-F0-9]{2,}$/i", $hex_code) && !(strlen($hex_code) & 1);
+}
 
 
 if(!function_exists('apache_request_headers')) {
@@ -61,7 +76,7 @@ if (!function_exists('http_parse_headers')) {
 }
 //$request_uri = $_SERVER['REQUEST_URI'];
 
-$final_url = $dest_url . '/' . $_GET['link'];
+$final_url = (isSecure() ? "https" : "http") . $dest_url . '/' . htmlspecialchars($_GET['link']);
 #echo $final_url;
 
 $headers = array();
@@ -87,10 +102,13 @@ curl_setopt($curl_session, CURLOPT_HEADER, 1);
 
 /* Make Actual Request */
 $res = curl_exec($curl_session);
+$res_info = curl_getinfo($curl_session);
 curl_close($curl_session);
 
-//echo $res;
-//die();
+/*proxy response code forward*/
+http_response_code($res_info['http_code']);
+#echo $res;
+#die();
 /* parse response */
 list($res_headers, $body) = explode("\r\n\r\n", $res, 2);
 
